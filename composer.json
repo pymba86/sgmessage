@@ -17,9 +17,7 @@
   "type": "library",
   "require": {
     "php": ">=7.1",
-    "creof/wkt-parser": "^2.2.0",
-    "creof/wkb-parser": "^v2.3.0",
-    "elevenlab/php-ogc": "^1.0.1"
+    "elevenlab/php-ogc": "dev-master"
   },
   "autoload": {
     "psr-4": {

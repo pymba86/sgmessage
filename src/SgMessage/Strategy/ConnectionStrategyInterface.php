@@ -1,6 +1,6 @@
 <?php
 
-namespace SgMessage\Strategy\Geometry;
+namespace SgMessage\Strategy;
 
 /**
  * Интерфейс обьекта который делает запрос к базе данных

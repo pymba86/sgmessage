@@ -9,4 +9,10 @@ namespace SgMessage\Strategy;
  */
 interface StrategyActionInterface {
 
+    /**
+     * Запустить задания по вычислению одинаковых сообщений
+     *
+     * @return int[] Список сообщений
+     */
+    public function action(): array;
 }
