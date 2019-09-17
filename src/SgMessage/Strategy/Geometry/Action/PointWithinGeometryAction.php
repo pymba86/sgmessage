@@ -3,14 +3,15 @@
 namespace SgMessage\Strategy\Geometry\Action;
 
 use SgMessage\Geometry\Type\Point;
-use SgMessage\Strategy\StrategyActionInterface;
+use SgMessage\Strategy\Geometry\ConnectionConditionGeometry;
+use SgMessage\Strategy\Geometry\GeometryStrategyActionInterface;
 
 /**
  * Задание для стратегии по поиску ближайших точек на заданном расстоянии (в метрах) от начальной точки
  * 
  * @package SgMessage\Strategy\Geometry\Action
  */
-class PointWithinGeometryAction implements StrategyActionInterface {
+class PointWithinGeometryAction implements GeometryStrategyActionInterface {
 
     /**
      * Начальная точка
@@ -34,23 +35,24 @@ class PointWithinGeometryAction implements StrategyActionInterface {
     private $distance;
 
     /**
-     * Задание по поиску ближайших точек(сообщений) 
-     * 
+     * Задание по поиску ближайших точек(сообщений)
+     *
      * @param Point $point
      * @param int $distance
+     * @param int $srid
      */
-    public function __construct(Point $point, int $distance)
+    public function __construct(Point $point, int $distance, int $srid)
     {
         $this->point = $point;
         $this->distance = $distance;
+        $this->srid = $srid;
     }
 
-    public function action(): array
+    public function action(ConnectionConditionGeometry $condition): void
     {
         /**
          * Добавляем к запросу условия
          */
     }
-
 
 }

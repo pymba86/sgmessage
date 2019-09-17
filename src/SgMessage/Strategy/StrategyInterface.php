@@ -9,6 +9,14 @@ namespace SgMessage\Strategy;
  *
  * @package SgMessage\Strategy
  */
-interface StrategyInterface {
+interface StrategyInterface
+{
+
+    /**
+     * Запустить стратегию обработки сообщений
+     *
+     * @return int[]
+     */
+    public function handle(): array;
 
 }
