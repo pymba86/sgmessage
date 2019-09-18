@@ -16,5 +16,5 @@ interface GeometryStrategyActionInterface
      * @param ConnectionConditionGeometry $condition
      * @return void
      */
-    public function action(ConnectionConditionGeometry $condition): void;
+    public function handle(ConnectionConditionGeometry $condition): void;
 }

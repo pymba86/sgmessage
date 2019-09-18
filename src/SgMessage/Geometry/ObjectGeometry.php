@@ -5,7 +5,7 @@ namespace SgMessage\Geometry;
 use CrEOF\Geo\WKT\Parser as WKTParser;
 use CrEOF\Geo\WKB\Parser as WKBParser;
 
-abstract class Object
+abstract class ObjectGeometry
 {
 
     private static $types_map = [
@@ -72,7 +72,7 @@ abstract class Object
      */
     public static function buildObject(array $parsed)
     {
-        /** @var Object $typeClass */
+        /** @var ObjectGeometry $typeClass */
         $typeClass = self::buildClassName($parsed['type']);
         return $typeClass::fromArray($parsed['value']);
     }

@@ -15,8 +15,9 @@ interface StrategyInterface
     /**
      * Запустить стратегию обработки сообщений
      *
-     * @return int[]
+     * @param array $messages Список сообщений по которому будет запущена стратегия
+     * @return int[] Новый список сообщений
      */
-    public function handle(): array;
+    public function handle(array $messages): array;
 
 }

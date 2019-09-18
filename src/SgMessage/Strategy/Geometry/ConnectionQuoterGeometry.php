@@ -1,5 +1,7 @@
 <?php
 
+namespace SgMessage\Strategy\Geometry;
+
 class ConnectionQuoterGeometry
 {
     /**
@@ -26,6 +28,11 @@ class ConnectionQuoterGeometry
         if ($value === null) {
             return 'NULL';
         }
+
+        if (is_string($value)) {
+            return "`$value`";
+        }
+
         return $value;
     }
 

@@ -3,9 +3,9 @@
 namespace SgMessage\Geometry\Type;
 
 use SgMessage\Geometry\Exception\GeoSpatialException;
-use SgMessage\Geometry\Object;
+use SgMessage\Geometry\ObjectGeometry;
 
-class Point extends Object
+class PointGeometry extends ObjectGeometry
 {
 
     protected $type = "POINT";

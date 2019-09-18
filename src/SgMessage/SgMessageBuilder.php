@@ -17,21 +17,24 @@ class SgMessageBuilder
 
     /**
      * Идентификаторы сообщений
+     *
      * @var int[]
      */
-    public $messages;
+    protected $messages = [];
 
     /**
      * Список стратегий
+     *
      * @var StrategyInterface[]
      */
-    public $strategies;
+    protected $strategies = [];
 
     /**
      * Список операций с сообщения
+     *
      * @var StrategyOperationInterface[]
      */
-    public $operations;
+    protected $operations = [];
 
     /**
      * Установить начальные идентификаторы сообщений, которые будут учтены в определении одинаковых
@@ -39,7 +42,7 @@ class SgMessageBuilder
      * @param int[] $messages
      * @return SgMessageBuilder
      */
-    public function messages(array $messages): SgMessageBuilder
+    public function messages(array $messages): self
     {
         $this->messages = array_unique($messages);
         return $this;
@@ -51,7 +54,7 @@ class SgMessageBuilder
      * @param array $strategies
      * @return SgMessageBuilder
      */
-    public function strategies(array $strategies): SgMessageBuilder
+    public function strategies(array $strategies): self
     {
         $this->strategies = $strategies;
         return $this;
@@ -59,11 +62,11 @@ class SgMessageBuilder
 
     /**
      * Установить операции для формирования результирующего списка сообщений
-     * 
+     *
      * @param array $operations
      * @return SgMessageBuilder
      */
-    public function operations(array $operations): SgMessageBuilder
+    public function operations(array $operations): self
     {
         $this->operations = $operations;
         return $this;
@@ -71,12 +74,24 @@ class SgMessageBuilder
 
     /**
      * Запустить определение одинаковых сообщений
+     *
+     * @return array
      */
-    public function run()
+    public function build(): array
     {
-        // Передача массива сообщений
-        // Запуск стратегий
-        // На каждом этапе стратегии пройтись по операциям 
-        // Вернуть список сообщений
+        $messagesResult = $this->messages;
+
+        foreach ($this->strategies as $strategy) {
+
+            $messagesStrategy = $strategy->handle($messagesResult);
+
+            if (!empty($messagesStrategy)) {
+                $messagesResult = $messagesStrategy;
+            } else {
+                break;
+            }
+        }
+
+        return $messagesResult;
     }
 }

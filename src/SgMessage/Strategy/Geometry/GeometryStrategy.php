@@ -21,7 +21,7 @@ class GeometryStrategy implements StrategyInterface
     /**
      * @var GeometryStrategyActionInterface[]
      */
-    protected $actions;
+    protected $actions = [];
 
     /**
      * @var string
@@ -31,7 +31,7 @@ class GeometryStrategy implements StrategyInterface
     /**
      * @var array
      */
-    protected $columns;
+    protected $columns = [];
 
     /**
      * @var string
@@ -57,11 +57,12 @@ class GeometryStrategy implements StrategyInterface
     /**
      * Добавить задание в общий список
      *
-     * @param GeometryStrategyActionInterface $action
+     * @param GeometryStrategyActionInterface[] $actions
      * @return GeometryStrategy
      */
-    public function action(GeometryStrategyActionInterface $action): self
+    public function actions(array $actions): self
     {
+        $this->actions = $actions;
         return $this;
     }
 
@@ -128,15 +129,32 @@ class GeometryStrategy implements StrategyInterface
      * @inheritdoc
      * @throws PrimaryColumnQueryException
      */
-    public function handle(): array
+    public function handle(array $messages): array
     {
+        // Добавляем фильтр по переданным сообщениям
+        if (!empty($messages)) {
+            $this->condition->where($this->primaryColumn, 'in', $messages);
+        }
+
+        // Запуск заданий
+        foreach ($this->actions as $action) {
+            $action->handle($this->condition);
+        }
+
         // Создание sql запроса
         $query = $this->buildQuery(true);
 
         // Запрос к базе данных
-        $this->connection->query($query);
+        $messagesQuery = $this->connection->query($query);
+
+        $result = [];
 
         // Выборка id сообщений
+        foreach ($messagesQuery as $message) {
+            $result[] = $message[$this->primaryColumn];
+        }
+
+        return $result;
     }
 
 

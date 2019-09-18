@@ -89,7 +89,7 @@ class ConnectionConditionGeometry
     }
 
 
-    public function where($conditions): self
+    public function where(...$conditions): self
     {
         if ($conditions[0] instanceof Closure) {
             $this->addClauseCondClosure('where', 'AND', $conditions[0]);
@@ -107,7 +107,7 @@ class ConnectionConditionGeometry
         $set = $this->$clause;
         $this->$clause = [];
         // invoke the closure, which will re-populate the $this->$clause
-       // $closure($this->query);
+       //TODO $closure($this->query);
         // are there new clause elements?
         if (empty($this->$clause)) {
             // no: restore the old ones, and done

@@ -2,7 +2,7 @@
 
 namespace SgMessage\Strategy\Geometry\Action;
 
-use SgMessage\Geometry\Type\Point;
+use SgMessage\Geometry\Type\PointGeometry;
 use SgMessage\Strategy\Geometry\ConnectionConditionGeometry;
 use SgMessage\Strategy\Geometry\GeometryStrategyActionInterface;
 
@@ -16,7 +16,7 @@ class PointWithinGeometryAction implements GeometryStrategyActionInterface {
     /**
      * Начальная точка
      * 
-     * @var Point
+     * @var PointGeometry
      */
     private $point;
 
@@ -37,22 +37,24 @@ class PointWithinGeometryAction implements GeometryStrategyActionInterface {
     /**
      * Задание по поиску ближайших точек(сообщений)
      *
-     * @param Point $point
+     * @param PointGeometry $point
      * @param int $distance
      * @param int $srid
      */
-    public function __construct(Point $point, int $distance, int $srid)
+    public function __construct(PointGeometry $point, int $distance, int $srid)
     {
         $this->point = $point;
         $this->distance = $distance;
         $this->srid = $srid;
     }
 
-    public function action(ConnectionConditionGeometry $condition): void
+    public function handle(ConnectionConditionGeometry $condition): void
     {
         /**
          * Добавляем к запросу условия
          */
+
+        $condition->where("name", "=", "Moscow");
     }
 
 }
