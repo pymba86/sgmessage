@@ -8,7 +8,7 @@ use SgMessage\Geometry\ObjectGeometry;
 class PointGeometry extends ObjectGeometry
 {
 
-    protected $type = "POINT";
+    protected $type = "Point";
 
     protected static $greatCircleProviders = ['haversine', 'vincenty'];
 
@@ -46,7 +46,7 @@ class PointGeometry extends ObjectGeometry
             throw new GeoSpatialException("Error wrong number of array elements, two needed");
         }
 
-        return new Point($points[0], $points[1]);
+        return new PointGeometry($points[0], $points[1]);
     }
 
     /**
@@ -76,15 +76,24 @@ class PointGeometry extends ObjectGeometry
     }
 
     /**
+     * Преобразовать обьект в строку
+     * @return string
+     */
+    public function __toString()
+    {
+        return "$this->lat $this->lon";
+    }
+
+    /**
      * Рассчитайте расстояние между двумя точками в метрах.
      *
-     * @param Point $p1
-     * @param Point $p2
+     * @param PointGeometry $p1
+     * @param PointGeometry $p2
      * @param string $provider
      * @return mixed
      * @throws GeoSpatialException
      */
-    public static function distance(Point $p1, Point $p2, $provider = "haversine")
+    public static function distance(PointGeometry $p1, PointGeometry $p2, $provider = "haversine")
     {
         switch ($provider) {
             case "haversine":
@@ -98,12 +107,12 @@ class PointGeometry extends ObjectGeometry
     }
 
     /**
-     * @param Point $from
-     * @param Point $to
+     * @param PointGeometry $from
+     * @param PointGeometry $to
      * @param int $earthRadius
      * @return float
      */
-    private static function vincentyGreatCircleDistance(Point $from, Point $to, $earthRadius = 6371000)
+    private static function vincentyGreatCircleDistance(PointGeometry $from, PointGeometry $to, $earthRadius = 6371000)
     {
         // convert from degrees to radians
         $latFrom = deg2rad($from->lat);
@@ -119,12 +128,12 @@ class PointGeometry extends ObjectGeometry
     }
 
     /**
-     * @param Point $from
-     * @param Point $to
+     * @param PointGeometry $from
+     * @param PointGeometry $to
      * @param int $earthRadius
      * @return float
      */
-    private static function haversineGreatCircleDistance(Point $from, Point $to, $earthRadius = 6371000)
+    private static function haversineGreatCircleDistance(PointGeometry $from, PointGeometry $to, $earthRadius = 6371000)
     {
         // convert from degrees to radians
         $latFrom = deg2rad($from->lat);

@@ -5,7 +5,7 @@ namespace Test\SgMessage;
 use PHPUnit\Framework\TestCase;
 use SgMessage\Geometry\Type\PointGeometry;
 use SgMessage\SgMessageBuilder;
-use SgMessage\Strategy\Geometry\Action\PointWithinGeometryAction;
+use SgMessage\Strategy\Geometry\Action\PointDistanceSphereGeometryAction;
 use SgMessage\Strategy\Geometry\GeometryStrategy;
 
 class SgMessageBuilderTest extends TestCase
@@ -20,20 +20,20 @@ class SgMessageBuilderTest extends TestCase
         $geometryStrategy = new GeometryStrategy($connection);
         $geometryStrategy
             ->table("messages")
-            ->columns(["id", "name", "lat", "long"])
+            ->columns(["id", "name", "location"])
             ->primary("id")
             ->actions([
-                    new PointWithinGeometryAction($point, 10, 3489)
+                    new PointDistanceSphereGeometryAction($point, "location", 1)
                 ]
             );
 
         $builder = new SgMessageBuilder();
-        $messages = $builder->strategies([
+        $messages = $builder
+            ->messages([])
+            ->strategies([
                 $geometryStrategy
             ]
-        )
-            ->messages([])
-            ->build();
+        )->build();
 
         $this->assertEmpty($messages);
     }

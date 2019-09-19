@@ -47,7 +47,7 @@ class ConnectionConditionGeometry
                 $whereType = strtoupper($type);
             }
             if ($conditions[0] instanceof RawExpConnectionGeometry) {
-                $sql[] = $whereType . ' ' . $conditions[0]->getValue();
+                $query[] = $whereType . ' ' . $conditions[0]->getValue();
                 continue;
             }
             [$leftField, $operator, $rightField] = $conditions;
