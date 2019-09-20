@@ -2,7 +2,6 @@
 
 namespace SgMessage\Strategy\Geometry;
 
-use ConnectionQuoterGeometry;
 use SgMessage\Strategy\Exception\PrimaryColumnQueryException;
 
 /**
