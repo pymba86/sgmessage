@@ -29,7 +29,6 @@ class PointDistanceSphereGeometryAction implements GeometryStrategyActionInterfa
      */
     private $distance;
 
-
     /**
      * Колонка в таблице
      *
@@ -38,17 +37,23 @@ class PointDistanceSphereGeometryAction implements GeometryStrategyActionInterfa
     private $column;
 
     /**
+     * @var float
+     */
+    private $radius;
+
+    /**
      * Задание по поиску ближайших точек(сообщений)
      *
      * @param PointGeometry $point
      * @param string $column
      * @param float $distance
      */
-    public function __construct(PointGeometry $point, string $column, float $distance)
+    public function __construct(PointGeometry $point, string $column, float $distance, float $radius)
     {
         $this->point = $point;
         $this->distance = $distance;
         $this->column = $column;
+        $this->radius = $radius;
     }
 
     public function handle(ConnectionConditionGeometry $condition): void
@@ -60,7 +65,7 @@ class PointDistanceSphereGeometryAction implements GeometryStrategyActionInterfa
          */
 
         $condition->where(new RawExp(
-            "ST_Distance_Sphere(ST_GeomFromText('{$this->point->toWkt()}'), {$this->column}, 6373) <= {$this->distance}"
+            "ST_Distance_Sphere(ST_GeomFromText('{$this->point->toWkt()}'), {$this->column}, {$this->radius}) <= {$this->distance}"
         ));
     }
 

@@ -5,6 +5,12 @@ namespace SgMessage\Geometry\Type;
 use SgMessage\Geometry\Exception\GeoSpatialException;
 use SgMessage\Geometry\ObjectGeometry;
 
+/**
+ * Географический объект - Точка
+ * Point геометрия, которая представляет одиночное расположение в координатном пространстве.
+ *
+ * @package SgMessage\Geometry\Type
+ */
 class PointGeometry extends ObjectGeometry
 {
 
@@ -66,9 +72,7 @@ class PointGeometry extends ObjectGeometry
     }
 
     /**
-     * Преобразовать обьект в массив коориднат
-     *
-     * @return mixed
+     * @inheritdoc
      */
     protected function toValueArray()
     {
